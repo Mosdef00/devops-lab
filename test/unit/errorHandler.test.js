@@ -28,4 +28,9 @@ describe('errorHandler', () => {
     expect(res.statusCode).toBe(418)
     expect(res.body).toEqual({ error: true, message: 'teapot' })
   })
+  it('falls back to 500 when the status is not an HTTP error code (DEVOPS-3)', () => {
+    const res = makeRes()
+    errorHandler({ status: 200, message: 'not an error status' }, {}, res, () => {})
+    expect(res.statusCode).toBe(500)
+  })
 })
