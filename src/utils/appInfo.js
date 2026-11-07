@@ -16,6 +16,7 @@ export function getPackageInfo () {
   return { name: pkg.name, version: pkg.version }
 }
 
+// DEVOPS-2: uptime rounded to whole seconds (process.uptime() returns e.g. 3.82501466)
 export function getRuntimeInfo () {
-  return { node: process.version, uptime: process.uptime() }
+  return { node: process.version, uptime: Math.round(process.uptime()) }
 }
