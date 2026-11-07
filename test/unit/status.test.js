@@ -18,4 +18,14 @@ describe('formatStatus', () => {
   it('steady at or after 1h', () => {
     expect(formatStatus(3600)).toBe('steady')
   })
+  it('handles the exact boundaries (DEVOPS-4)', () => {
+    expect(formatStatus(0)).toBe('warming-up')
+    expect(formatStatus(59)).toBe('warming-up')
+    expect(formatStatus(60)).toBe('healthy')
+  })
+  it('throws on invalid input (DEVOPS-4)', () => {
+    for (const v of ['100', null, undefined, NaN, Infinity]) {
+      expect(() => formatStatus(v)).toThrow('invalid uptime')
+    }
+  })
 })
