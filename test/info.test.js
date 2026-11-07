@@ -22,3 +22,10 @@ describe('GET /info', () => {
     expect(res.body.uptime).toBeGreaterThanOrEqual(0)
   })
 })
+
+describe('GET /info (DEVOPS-2)', () => {
+  it('returns uptime as a whole number of seconds', async () => {
+    const res = await request(app).get('/info')
+    expect(Number.isInteger(res.body.uptime)).toBe(true)
+  })
+})
