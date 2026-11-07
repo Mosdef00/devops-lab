@@ -19,3 +19,11 @@ describe('GET /version', () => {
     expect(res.headers['content-type']).toMatch(/application\/json/)
   })
 })
+describe('GET /version (DEVOPS-1)', () => {
+  it('matches package.json and follows semver x.y.z', async () => {
+    const { getPackageInfo } = await import('../src/utils/appInfo.js')
+    const res = await request(app).get('/version')
+    expect(res.body).toEqual({ version: getPackageInfo().version })
+    expect(res.body.version).toMatch(/^\d+\.\d+\.\d+/)
+  })
+})
